@@ -24,5 +24,7 @@ namespace ShoppingCart.Services
         Task<IEnumerable<string>> GetAvailableColorsAsync();
 
         Task<ProductDto?> GetProductByIdAsync(int id);
+
+        Task<FilteredResult> GetFilteredProductsAsync(FilterRequest request);
     }
 }
