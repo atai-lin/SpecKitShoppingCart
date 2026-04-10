@@ -23,6 +23,8 @@ namespace ShoppingCart.Services
         public async Task<PaginatedList<ProductDto>> GetProductsAsync(
             string? q, 
             int[]? categoryIds, 
+            string? material,
+            string? color,
             string? sortBy, 
             bool isDesc, 
             int pageIndex, 
@@ -39,15 +41,22 @@ namespace ShoppingCart.Services
             // Filtering
             if (!string.IsNullOrWhiteSpace(q))
             {
-                // Priority: Exact match on Name
-                // In a real app with 10k items, we'd use a more sophisticated approach.
-                // For now, we use a simple LINQ query.
-                query = query.Where(p => p.Name == q || p.Name.Contains(q) || (p.Description != null && p.Description.Contains(q)));
+                query = query.Where(p => p.Name.Contains(q) || (p.Description != null && p.Description.Contains(q)));
             }
 
             if (categoryIds != null && categoryIds.Length > 0)
             {
                 query = query.Where(p => categoryIds.Contains(p.CategoryId));
+            }
+
+            if (!string.IsNullOrWhiteSpace(material))
+            {
+                query = query.Where(p => p.Material == material);
+            }
+
+            if (!string.IsNullOrWhiteSpace(color))
+            {
+                query = query.Where(p => p.Color == color);
             }
 
             // Sorting
@@ -67,7 +76,9 @@ namespace ShoppingCart.Services
                 p.SalesVolume,
                 p.ImageUrl,
                 p.CreatedTime,
-                p.Category.Name
+                p.Category.Name,
+                p.Material,
+                p.Color
             ));
 
             var result = await PaginatedList<ProductDto>.CreateAsync(productDtos, pageIndex, pageSize);
@@ -83,6 +94,24 @@ namespace ShoppingCart.Services
             return await _context.Categories
                 .AsNoTracking()
                 .Select(c => new CategoryDto(c.Id, c.Name, c.Description))
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<string>> GetAvailableMaterialsAsync()
+        {
+            return await _context.Products
+                .Where(p => p.Material != null)
+                .Select(p => p.Material!)
+                .Distinct()
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<string>> GetAvailableColorsAsync()
+        {
+            return await _context.Products
+                .Where(p => p.Color != null)
+                .Select(p => p.Color!)
+                .Distinct()
                 .ToListAsync();
         }
 
@@ -103,7 +132,9 @@ namespace ShoppingCart.Services
                 p.SalesVolume,
                 p.ImageUrl,
                 p.CreatedTime,
-                p.Category.Name
+                p.Category.Name,
+                p.Material,
+                p.Color
             );
         }
     }

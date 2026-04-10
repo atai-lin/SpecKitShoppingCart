@@ -10,7 +10,9 @@ namespace ShoppingCart.Models.Dtos
         int SalesVolume,
         string? ImageUrl,
         DateTime CreatedTime,
-        string CategoryName
+        string CategoryName,
+        string? Material,
+        string? Color
     );
 
     public record CategoryDto(

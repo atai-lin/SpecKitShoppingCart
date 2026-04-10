@@ -10,12 +10,18 @@ namespace ShoppingCart.Services
         Task<PaginatedList<ProductDto>> GetProductsAsync(
             string? q, 
             int[]? categoryIds, 
+            string? material,
+            string? color,
             string? sortBy, 
             bool isDesc, 
             int pageIndex, 
             int pageSize);
 
         Task<IEnumerable<CategoryDto>> GetCategoriesAsync();
+
+        Task<IEnumerable<string>> GetAvailableMaterialsAsync();
+
+        Task<IEnumerable<string>> GetAvailableColorsAsync();
 
         Task<ProductDto?> GetProductByIdAsync(int id);
     }

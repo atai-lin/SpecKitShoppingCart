@@ -3,27 +3,84 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - SpecKit Shopping</title>
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <title>@ViewData["Title"] - ATELIER</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
 </head>
-<body class="bg-gray-50 flex flex-col min-h-screen">
-    <header class="bg-white shadow-sm">
-        <nav class="container mx-auto px-4 py-4 flex justify-between items-center">
-            <a class="text-xl font-bold text-blue-600" asp-page="/Index">SpecKit Shopping</a>
-            <div class="flex space-x-6 items-center">
-                <a class="text-gray-600 hover:text-blue-600" asp-page="/Products/Index">Shop</a>
-                <a class="text-gray-600 hover:text-blue-600" asp-page="/Privacy">Privacy</a>
+<body class="bg-atelier-bg text-atelier-dark font-work flex flex-col min-h-screen antialiased">
+    <header class="sticky top-0 z-[100] bg-atelier-bg/80 backdrop-blur-[12px]">
+        <nav class="max-w-[1440px] mx-auto px-8 py-6 flex justify-between items-center w-full">
+            <div class="flex items-center gap-[40px]">
+                <a class="text-2xl font-semibold tracking-[-0.48px] text-atelier-dark font-work" asp-page="/Index">ATELIER</a>
+                <div class="hidden lg:flex space-x-10 items-center">
+                    <div class="border-atelier-green border-b border-solid flex flex-col items-start pb-[5px]">
+                        <a class="text-[14px] font-normal tracking-[-0.7px] uppercase text-atelier-green" asp-page="/Products/Index">Collections</a>
+                    </div>
+                    <a class="text-[14px] font-normal tracking-[-0.7px] uppercase text-atelier-dark/70 hover:text-atelier-dark transition-colors" href="#">New Arrivals</a>
+                    <a class="text-[14px] font-normal tracking-[-0.7px] uppercase text-atelier-dark/70 hover:text-atelier-dark transition-colors" href="#">Archive</a>
+                    <a class="text-[14px] font-normal tracking-[-0.7px] uppercase text-atelier-dark/70 hover:text-atelier-dark transition-colors" href="#">About</a>
+                </div>
+            </div>
+            <div class="flex items-center gap-[25px]">
+                <button class="text-atelier-dark/80 hover:text-atelier-dark transition-colors">
+                    <svg width="12" height="15" viewBox="0 0 13 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M11.875 14.25V12.6667C11.875 11.8268 11.5414 11.0214 10.9475 10.4275C10.3536 9.83363 9.54819 9.5 8.70833 9.5H3.16667C2.32681 9.5 1.52136 9.83363 0.927503 10.4275C0.333642 11.0214 0 11.8268 0 12.6667V14.25" />
+                        <path d="M5.9375 6.33333C7.62754 6.33333 9 4.96087 9 3.27083C9 1.5808 7.62754 0.208333 5.9375 0.208333C4.24746 0.208333 2.875 1.5808 2.875 3.27083C2.875 4.96087 4.24746 6.33333 5.9375 6.33333Z" />
+                    </svg>
+                </button>
+                <a class="text-atelier-dark/80 hover:text-atelier-dark transition-colors relative" asp-page="/Cart">
+                    <svg width="12" height="12" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M10.2917 4.35417H2.375C1.9838 4.35417 1.60863 4.50956 1.33201 4.78618C1.0554 5.0628 0.9 5.43797 0.9 5.82917V10.5792C0.9 10.9704 1.0554 11.3455 1.33201 11.6222C1.60863 11.8988 1.9838 12.0542 2.375 12.0542H10.2917C10.6829 12.0542 11.058 11.8988 11.3347 11.6222C11.6113 11.3455 11.7667 10.9704 11.7667 10.5792V5.82917C11.7667 5.43797 11.6113 5.0628 11.3347 4.78618C11.058 4.50956 10.6829 4.35417 10.2917 4.35417Z" />
+                        <path d="M3.66663 4.35417V2.375C3.66663 1.9838 3.82201 1.60863 4.09863 1.33201C4.37525 1.0554 4.75042 0.9 5.14163 0.9H7.51663C7.90782 0.9 8.28299 1.0554 8.55961 1.33201C8.83623 1.60863 8.99163 1.9838 8.99163 2.375V4.35417" />
+                    </svg>
+                </a>
             </div>
         </nav>
     </header>
 
-    <main role="main" class="flex-grow container mx-auto px-4 py-8">
+    <main role="main" class="flex-grow">
         @RenderBody()
     </main>
 
-    <footer class="bg-white border-t border-gray-200 py-6 mt-12">
-        <div class="container mx-auto px-4 text-center text-gray-500">
-            &copy; 2026 - SpecKit Shopping - <a asp-page="/Privacy">Privacy</a>
+    <footer class="bg-atelier-footer">
+        <div class="max-w-[1440px] mx-auto px-8 py-20">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-[48px] mb-20">
+                <div class="flex flex-col gap-[23.25px]">
+                    <h4 class="text-[18px] font-semibold tracking-tighter text-atelier-dark font-work">ATELIER</h4>
+                    <p class="text-[12px] uppercase tracking-[0.6px] text-atelier-dark/50 leading-[1.625] font-work">
+                        An architectural approach to<br>wardrobe building. Crafted for the<br>modern individual who values<br>substance over trend.
+                    </p>
+                </div>
+                <div class="flex flex-col gap-[24px]">
+                    <h4 class="text-[12px] font-bold uppercase tracking-atelier-wide text-atelier-dark font-manrope">Navigation</h4>
+                    <ul class="flex flex-col gap-[16px]">
+                        <li><a href="#" class="text-[12px] uppercase tracking-atelier-wide text-atelier-dark/50 hover:text-atelier-dark transition-colors font-work">Sustainability</a></li>
+                        <li><a href="#" class="text-[12px] uppercase tracking-atelier-wide text-atelier-dark/50 hover:text-atelier-dark transition-colors font-work">Shipping</a></li>
+                        <li><a href="#" class="text-[12px] uppercase tracking-atelier-wide text-atelier-dark/50 hover:text-atelier-dark transition-colors font-work">Returns</a></li>
+                    </ul>
+                </div>
+                <div class="flex flex-col gap-[24px]">
+                    <h4 class="text-[12px] font-bold uppercase tracking-atelier-wide text-atelier-dark font-manrope">Legal</h4>
+                    <ul class="flex flex-col gap-[16px]">
+                        <li><a asp-page="/Privacy" class="text-[12px] uppercase tracking-atelier-wide text-atelier-dark/50 hover:text-atelier-dark transition-colors font-work">Privacy</a></li>
+                        <li><a href="#" class="text-[12px] uppercase tracking-atelier-wide text-atelier-dark/50 hover:text-atelier-dark transition-colors font-work">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div class="flex flex-col gap-[24px]">
+                    <h4 class="text-[12px] font-bold uppercase tracking-atelier-wide text-atelier-dark font-manrope">Connect</h4>
+                    <ul class="flex flex-col gap-[16px]">
+                        <li><a href="#" class="text-[12px] uppercase tracking-atelier-wide text-atelier-dark/50 hover:text-atelier-dark transition-colors font-work">Instagram</a></li>
+                        <li><a href="#" class="text-[12px] uppercase tracking-atelier-wide text-atelier-dark/50 hover:text-atelier-dark transition-colors font-work">Journal</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="pt-[40px] border-t border-atelier-dark/10">
+                <p class="text-[12px] uppercase tracking-atelier-wide text-atelier-dark/50 font-work">
+                    © 2024 ATELIER. ALL RIGHTS RESERVED.
+                </p>
+            </div>
         </div>
     </footer>
 
