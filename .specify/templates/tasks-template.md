@@ -60,14 +60,14 @@ description: "Task list template for feature implementation"
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete
 
-Examples of foundational tasks (adjust based on your project):
-
-- [ ] T004 Setup database schema and migrations framework
-- [ ] T005 [P] Implement authentication/authorization framework
-- [ ] T006 [P] Setup API routing and middleware structure
-- [ ] T007 Create base models/entities that all stories depend on
-- [ ] T008 Configure error handling and logging infrastructure
-- [ ] T009 Setup environment configuration management
+- [ ] T004 Setup ASP.NET Core 10 project and EF Core Code First migrations
+- [ ] T005 [P] Implement JWT Authentication (60min expiration)
+- [ ] T006 [P] Configure bcrypt password hashing
+- [ ] T007 [P] Enable mandatory HTTPS enforcement
+- [ ] T008 [P] Configure Swagger/OpenAPI documentation
+- [ ] T009 [P] Initialize ILogger with 90-day retention configuration
+- [ ] T010 Setup shared Layout and CSS structure
+- [ ] T011 Create base models/entities that all stories depend on
 
 **Checkpoint**: Foundation ready - user story implementation can now begin in parallel
 
@@ -79,21 +79,20 @@ Examples of foundational tasks (adjust based on your project):
 
 **Independent Test**: [How to verify this story works on its own]
 
-### Tests for User Story 1 (OPTIONAL - only if tests requested) ⚠️
+### Tests for User Story 1 (80% Coverage Target) ⚠️
 
 > **NOTE: Write these tests FIRST, ensure they FAIL before implementation**
 
-- [ ] T010 [P] [US1] Contract test for [endpoint] in tests/contract/test_[name].py
-- [ ] T011 [P] [US1] Integration test for [user journey] in tests/integration/test_[name].py
+- [ ] T012 [P] [US1] Unit tests for business logic (Target: 80%+ coverage)
+- [ ] T013 [P] [US1] Integration tests for core flows
 
 ### Implementation for User Story 1
 
-- [ ] T012 [P] [US1] Create [Entity1] model in src/models/[entity1].py
-- [ ] T013 [P] [US1] Create [Entity2] model in src/models/[entity2].py
-- [ ] T014 [US1] Implement [Service] in src/services/[service].py (depends on T012, T013)
-- [ ] T015 [US1] Implement [endpoint/feature] in src/[location]/[file].py
-- [ ] T016 [US1] Add validation and error handling
-- [ ] T017 [US1] Add logging for user story 1 operations
+- [ ] T014 [P] [US1] Create [Entity] model/DTOs
+- [ ] T015 [US1] Implement [Service] with business logic
+- [ ] T016 [US1] Implement PageModel/Controller
+- [ ] T017 [US1] Implement UI using shared Layout
+- [ ] T018 [US1] Add audit logging for sensitive operations
 
 **Checkpoint**: At this point, User Story 1 should be fully functional and testable independently
 

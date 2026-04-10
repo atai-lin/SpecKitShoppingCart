@@ -1,50 +1,52 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+<!-- 
+Sync Impact Report
+Version change: [TEMPLATE] -> 1.0.0
+List of modified principles:
+- [PRINCIPLE_1_NAME] -> I. 技術標準 (Technical Standards)
+- [PRINCIPLE_2_NAME] -> II. 安全規範 (Security & Authentication)
+- [PRINCIPLE_3_NAME] -> III. 效能與品質 (Performance & Quality)
+- [PRINCIPLE_4_NAME] -> IV. 程式碼規範與測試 (Coding Standards & Testing)
+- [PRINCIPLE_5_NAME] -> V. 治理與記錄 (Governance & Logging)
+Added sections: 技術與合規, 開發工作流
+Removed sections: None
+Templates requiring updates:
+- .specify/templates/plan-template.md (✅ updated)
+- .specify/templates/tasks-template.md (✅ updated)
+- .specify/templates/spec-template.md (✅ aligned)
+Follow-up TODOs: None
+-->
+
+# ShoppingCartSpecKit Constitution
 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+### I. 技術標準 (Technical Standards)
+本專案採用 ASP.NET Core 10 作為核心框架，並使用 EF Core Code First 進行資料庫建模與 Migrations 管理。所有 API 必須透過 Swagger 進行文件化，並遵循 RESTful 設計原則。
+Rationale: 確保技術棧的一致性與現代化，並透過自動化工具降低溝通成本。
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+### II. 安全規範 (Security & Authentication)
+安全性是系統的基石。必須使用自建 JWT (有效期 60 分鐘) 與 bcrypt 加密技術進行身分驗證與密碼保護。系統強制執行 HTTPS 傳輸。對於任何未經授權或憑證無效的請求，必須統一回傳 401 Unauthorized。
+Rationale: 保護使用者資料安全，並符合現代 Web 安全標準。
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+### III. 效能與品質 (Performance & Quality)
+API 的回應時間 (Latency) 必須維持在 200ms 以內。前端開發應優先使用共用的 Layout 組件，以確保視覺一致性並提高開發效率。
+Rationale: 提供流暢的使用者體驗，並降低前端維護成本。
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+### IV. 程式碼規範與測試 (Coding Standards & Testing)
+開發應嚴格遵循 C# 命名與編碼慣例。所有業務邏輯必須封裝於 PageModel 或 Service 層，嚴禁在控制器或視圖中直接編寫邏輯。單元測試覆蓋率必須達到 80% 以上。
+Rationale: 提高程式碼的可讀性與可維護性，並透過高測試覆蓋率確保系統穩定。
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+### V. 治理與記錄 (Governance & Logging)
+統一使用 ILogger 介面進行日誌記錄，嚴禁使用 Console.WriteLine。日誌保留期限為 90 天。對於所有敏感操作，必須詳細記錄「操作人員」與「精確時間戳記」。
+Rationale: 滿足審計合規要求，並在發生問題時提供可靠的追蹤依據。
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+## 技術與合規 (Technology & Compliance)
+專案核心技術棧為 ASP.NET Core 10 與 EF Core。所有開發活動必須符合安全加密標準與 HTTPS 要求。
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
-
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
-
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+## 開發工作流 (Development Workflow)
+採用 Code First 開發模式。每次提交前應執行單元測試，並確保 Swagger 文件即時更新。業務邏輯應與呈現層分離。
 
 ## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
+本憲法優於所有其他開發實務。任何對本憲法的修改均需經過正式提案、影響評估與審核。所有 PR 必須經過測試覆蓋率檢查與日誌規範校閱方可合併。
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
-
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+**Version**: 1.0.0 | **Ratified**: 2026-04-10 | **Last Amended**: 2026-04-10

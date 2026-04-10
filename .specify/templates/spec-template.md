@@ -84,16 +84,13 @@
 
 ### Functional Requirements
 
-- **FR-001**: System MUST [specific capability, e.g., "allow users to create accounts"]
-- **FR-002**: System MUST [specific capability, e.g., "validate email addresses"]  
-- **FR-003**: Users MUST be able to [key interaction, e.g., "reset their password"]
-- **FR-004**: System MUST [data requirement, e.g., "persist user preferences"]
-- **FR-005**: System MUST [behavior, e.g., "log all security events"]
-
-*Example of marking unclear requirements:*
-
-- **FR-006**: System MUST authenticate users via [NEEDS CLARIFICATION: auth method not specified - email/password, SSO, OAuth?]
-- **FR-007**: System MUST retain user data for [NEEDS CLARIFICATION: retention period not specified]
+- **FR-001**: System MUST use ASP.NET Core 10 and EF Core Code First.
+- **FR-002**: System MUST authenticate users via JWT (60min expiration).
+- **FR-003**: All passwords MUST be hashed with bcrypt.
+- **FR-004**: All communications MUST be over HTTPS.
+- **FR-005**: All sensitive operations MUST be logged with user and timestamp using ILogger.
+- **FR-006**: All APIs MUST respond within 200ms.
+- **FR-007**: All UI MUST use the shared Layout.
 
 ### Key Entities *(include if feature involves data)*
 
