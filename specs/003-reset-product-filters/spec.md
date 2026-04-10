@@ -5,6 +5,15 @@
 **Status**: Draft  
 **Input**: User description: "產品清單頁面的篩選選單，要能夠取消選取來讓篩選重置"
 
+## Clarifications
+
+### Session 2026-04-11
+- Q: When a filter is deselected, should the page perform a full reload via the URL, or should it update the URL silently? → A: Silent update (History API) + AJAX/Partial Refresh
+- Q: Should each filter group support multiple active selections, or should clicking a new item replace the previous selection? → A: Multiple selections allowed (OR logic within the group)
+- Q: If a keyword search is active, should deselecting all filters also clear the search keyword? → A: Filters are independent (Search term remains active)
+- Q: Should the counts displayed next to filter items update dynamically when a filter is deselected? → A: Yes, counts update dynamically for all visible filter items
+- Q: Should the sort order remain active when filters are deselected? → A: Sort order is independent (remains active when filters change)
+
 ## User Scenarios & Testing *(mandatory)*
 
 ### User Story 1 - Deselect Single Filter (Priority: P1)
@@ -55,7 +64,9 @@ As a customer, I want to be able to return to the original unfiltered view by de
 
 - **Rapid Clicking**: What happens when a user clicks a filter item multiple times in rapid succession? The system should handle the toggle state correctly without visual or data desync.
 - **Empty Results**: If deselecting a filter results in a state that *should* have products but the database is empty (unlikely for a reset), how is this handled? (Standard "No products found" message).
-- **URL Desync**: If the filter state is reflected in the URL (query params), does deselecting the filter correctly remove the parameter from the URL?
+- **URL Desync**: The URL MUST be updated silently using the History API to reflect the current filter state without triggering a full page reload.
+- **Search Persistence**: Keyword searches MUST remain active when filters are toggled; deselecting filters only affects the faceted criteria, not the search term.
+- **Sort Persistence**: The active sort order (e.g., Price: Low to High) MUST persist after filter deselection.
 
 ## Requirements *(mandatory)*
 
@@ -63,14 +74,15 @@ As a customer, I want to be able to return to the original unfiltered view by de
 
 - **FR-001**: The filter menu MUST support a "toggle" behavior for all filter items (Category, Material, Color, etc.).
 - **FR-002**: Clicking an already active (selected) filter item MUST deactivate (deselect) it.
-- **FR-003**: The product list MUST update immediately to reflect the new filter state whenever a filter is deselected.
+- **FR-003**: The product list MUST update immediately (using AJAX or partial page refresh) to reflect the new filter state whenever a filter is deselected, without a full page reload.
 - **FR-004**: All visual indicators (e.g., checkmarks, background highlights, or bold text) MUST be removed from a filter item when it is deselected.
-- **FR-005**: If multiple criteria are selected within the same group (e.g., two different colors), deselecting one MUST only remove that specific item from the filter set.
-- **FR-006**: The "unfiltered" state (all products shown) MUST be restored when no filter items are selected.
+- **FR-005**: If multiple criteria are selected within the same group (e.g., two different colors), the filtering logic MUST use **OR** logic within that group. Deselecting one MUST only remove that specific item from the filter set.
+- **FR-006**: The "unfiltered" state (all products shown) MUST be restored when no filter items are selected, while preserving any active search keyword or sort preference.
+- **FR-007**: Filter item counts displayed in the menu MUST update dynamically in real-time as filters are deselected.
 
 ### Key Entities *(include if feature involves data)*
 
-- **Filter State**: A collection of active filter criteria currently applied to the product list.
+- **Filter State**: A collection of active filter criteria (and any active search keyword or sort preference) currently applied to the product list.
 - **Product List**: The display area showing products that match the current Filter State.
 - **Filter Menu**: The UI component containing various groups of filterable attributes (e.g., Category, Material).
 
