@@ -4,56 +4,52 @@
     ViewData["Title"] = "The Winter Collection";
 }
 
-<div class="max-w-[1440px] mx-auto px-8 pb-32 pt-24 w-full">
-    <!-- Hero Section -->
-    <div class="flex flex-col md:flex-row items-start justify-between mb-20 gap-8 w-full">
-        <div class="flex-1 text-left">
-            <span class="text-[12px] uppercase tracking-[1.2px] text-atelier-gray font-normal font-work block mb-4">Seasonal Edit</span>
-            <h1 class="text-[64px] lg:text-[96px] leading-[1] lg:leading-[96px] font-extrabold text-atelier-dark uppercase tracking-[-2.88px] font-manrope">
-                The Winter<br>Collection
-            </h1>
+<div class="bg-atelier-bg min-h-screen">
+    <div class="max-w-[1440px] mx-auto px-8 pb-24 pt-32">
+        <!-- Hero Section -->
+        <div class="flex flex-col md:flex-row items-end justify-between mb-24 gap-8 w-full">
+            <div class="max-w-[672px]">
+                <span class="text-[12px] uppercase tracking-[1.2px] text-atelier-gray font-normal font-work block mb-4">Seasonal Edit</span>
+                <h1 class="text-[64px] lg:text-[96px] leading-[1] lg:leading-[96px] font-extrabold text-atelier-dark uppercase tracking-[-2.88px] font-manrope">
+                    The Winter<br>Collection
+                </h1>
+            </div>
+            <div class="flex items-center gap-[48px] border-b border-atelier-border pb-[9px] h-fit">
+                <button type="button" class="flex items-center gap-[8px] text-[12px] uppercase tracking-[1.2px] font-normal text-atelier-dark hover:text-atelier-green transition-colors font-work">
+                    <span>Filters</span>
+                    <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M2.5 4.375H12.5M4.375 7.5H10.625M6.25 10.625H8.75" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+                <button type="button" class="flex items-center gap-[8px] text-[12px] uppercase tracking-[1.2px] font-normal text-atelier-dark hover:text-atelier-green transition-colors font-work">
+                    <span>Sort</span>
+                    <svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+            </div>
         </div>
-        <div class="flex items-center gap-[47.99px] border-b border-atelier-border pb-[9px] h-fit md:self-end">
-            <button class="flex items-center gap-[7.99px] text-[12px] uppercase tracking-[1.2px] font-normal text-atelier-dark hover:text-atelier-green transition-colors font-work">
-                <span>Filters</span>
-                <svg width="15" height="15" viewBox="0 0 15 15" fill="none" stroke="currentColor" stroke-width="1.5">
-                    <path d="M2.5 4.375H12.5M4.375 7.5H10.625M6.25 10.625H8.75" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-            </button>
-            <button class="flex items-center gap-2 text-[12px] uppercase tracking-[1.2px] font-normal text-atelier-dark hover:text-atelier-green transition-colors font-work">
-                <span>Sort</span>
-                <svg width="10" height="6" viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m1 1 4 4 4-4"/></svg>
-            </button>
-        </div>
-    </div>
 
-    <!-- Main Content Section: Sidebar + Grid -->
-    <div class="flex flex-col md:flex-row gap-16 items-start w-full">
-        <!-- Sidebar: Filters (Fixed width 256px) -->
-        <aside class="w-full md:w-[256px] flex-shrink-0 md:sticky md:top-36 z-10">
-            <form method="get" id="filterForm" class="w-full">
-                <input type="hidden" name="q" value="@Model.Q" />
-                <input type="hidden" name="sortBy" value="@Model.SortBy" />
-                <input type="hidden" name="isDesc" value="@Model.IsDesc.ToString().ToLower()" />
+        <!-- Main Content Section -->
+        <div class="flex flex-col md:flex-row gap-16 items-start w-full">
+            <!-- Sidebar: Filters -->
+            <aside class="w-full md:w-[256px] flex-shrink-0">
+                <form method="get" id="filterForm" class="space-y-12">
+                    <input type="hidden" name="q" value="@Model.Q" />
+                    <input type="hidden" name="sortBy" value="@Model.SortBy" />
+                    <input type="hidden" name="isDesc" value="@Model.IsDesc.ToString().ToLower()" />
 
-                <div class="space-y-12 w-full">
                     <!-- Categories -->
                     <div class="space-y-6">
                         <h3 class="text-[12px] font-bold uppercase tracking-[1.2px] text-atelier-dark font-manrope">Categories</h3>
-                        <div class="space-y-4">
+                        <div class="flex flex-col gap-4">
                             @foreach (var category in Model.Categories)
                             {
-                                <div class="flex items-start">
-                                    <input type="checkbox" name="categoryIds" value="@category.Id" 
-                                           id="cat-@category.Id"
-                                           onchange="this.form.submit()"
-                                           @(Model.CategoryIds != null && Model.CategoryIds.Contains(category.Id) ? "checked" : "")
-                                           class="hidden">
-                                    <label for="cat-@category.Id" 
-                                           class="text-[14px] leading-[20px] cursor-pointer transition-colors font-work @(Model.CategoryIds != null && Model.CategoryIds.Contains(category.Id) ? "text-atelier-dark font-medium" : "text-atelier-gray hover:text-atelier-dark")">
-                                        @category.Name
-                                    </label>
-                                </div>
+                                <a asp-page="/Products/Index" 
+                                   asp-route-categoryIds="@category.Id"
+                                   class="text-[14px] leading-[20px] transition-colors font-work @(Model.CategoryIds != null && Model.CategoryIds.Contains(category.Id) ? "text-atelier-dark font-medium" : "text-atelier-gray hover:text-atelier-dark")">
+                                    @category.Name (15)
+                                </a>
                             }
                         </div>
                     </div>
@@ -61,10 +57,10 @@
                     <!-- Material -->
                     <div class="space-y-6">
                         <h3 class="text-[12px] font-bold uppercase tracking-[1.2px] text-atelier-dark font-manrope">Material</h3>
-                        <div class="space-y-3">
+                        <div class="flex flex-col gap-3">
                             @foreach (var material in Model.AvailableMaterials)
                             {
-                                <label class="flex items-center gap-[12px] cursor-pointer group">
+                                <label class="flex items-center gap-3 cursor-pointer group">
                                     <div class="relative w-4 h-4 border border-[#b2b2b1] rounded-[2px] bg-white transition-colors group-hover:border-atelier-dark">
                                         <input type="radio" name="material" value="@material" 
                                                onchange="this.form.submit()"
@@ -75,7 +71,7 @@
                                             <div class="absolute inset-[2px] bg-atelier-dark rounded-[1px]"></div>
                                         }
                                     </div>
-                                    <span class="text-[14px] leading-[20px] @(Model.Material == material ? "text-atelier-dark font-medium" : "text-atelier-dark") transition-colors group-hover:text-atelier-dark font-work">@material</span>
+                                    <span class="text-[14px] leading-[20px] text-atelier-dark font-work transition-colors">@material</span>
                                 </label>
                             }
                         </div>
@@ -84,7 +80,7 @@
                     <!-- Color -->
                     <div class="space-y-6">
                         <h3 class="text-[12px] font-bold uppercase tracking-[1.2px] text-atelier-dark font-manrope">Color</h3>
-                        <div class="flex flex-wrap gap-[12px]">
+                        <div class="flex flex-wrap gap-3">
                             @foreach (var color in Model.AvailableColors)
                             {
                                 <label class="cursor-pointer group relative">
@@ -92,54 +88,49 @@
                                            onchange="this.form.submit()"
                                            @(Model.Color == color ? "checked" : "")
                                            class="hidden">
-                                    <div class="w-6 h-6 rounded-full border border-atelier-border/20 transition-transform group-hover:scale-110 @(Model.Color == color ? "ring-1 ring-offset-2 ring-atelier-dark" : "")" 
+                                    <div class="w-6 h-6 rounded-full border border-atelier-border/20 transition-all group-hover:scale-110 @(Model.Color == color ? "ring-1 ring-offset-2 ring-atelier-dark" : "")" 
                                          style="background-color: @color;">
                                     </div>
                                 </label>
                             }
                         </div>
                     </div>
-                </div>
-            </form>
-        </aside>
+                </form>
+            </aside>
 
-        <!-- Main Content: Product Grid (Takes remaining space) -->
-        <div class="flex-1 min-w-0">
-            @if (!Model.Products.Any())
-            {
-                <div class="bg-white border border-atelier-divider p-24 text-center">
-                    <p class="text-atelier-gray text-lg font-light italic font-work">No essentials found matching your selection.</p>
-                </div>
-            }
-            else
-            {
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-[32px] gap-y-[80px] relative">
-                    @for (int i = 0; i < Model.Products.Count; i++)
-                    {
-                        var product = Model.Products[i];
-                        // Asymmetrical offset per Figma
-                        // Card 2, 5, 8... (i % 3 == 1) have pt-12 offset
-                        // Card 4, 7, 10... (i % 3 == 0 && i > 0) could have different offset if we follow exact Figma, but let's stick to the grid pattern
-                        var isOffsetDown = (i % 3 == 1);
-                        var isOffsetUp = (i % 3 == 0 && i >= 3); 
-                        
-                        <div class="group @(isOffsetDown ? "lg:mt-12" : (isOffsetUp ? "lg:-mt-12" : ""))">
-                            <!-- Product Card -->
-                            <div class="flex flex-col gap-6">
-                                <div class="relative aspect-[3/4] bg-[#f6f3f2] overflow-hidden group">
+            <!-- Product Grid -->
+            <div class="flex-1 min-w-0">
+                @if (!Model.Products.Any())
+                {
+                    <div class="bg-white border border-atelier-divider p-24 text-center">
+                        <p class="text-atelier-gray text-lg font-light italic font-work">No essentials found matching your selection.</p>
+                    </div>
+                }
+                else
+                {
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-[32px] gap-y-[80px]">
+                        @for (int i = 0; i < Model.Products.Count; i++)
+                        {
+                            var product = Model.Products[i];
+                            // Visual tension pattern from Figma
+                            var isOffsetDown = (i == 1 || i == 5 || (i > 5 && i % 6 == 1) || (i > 5 && i % 6 == 5));
+                            var isOffsetUp = (i == 3 || (i > 5 && i % 6 == 3));
+                            
+                            <div class="flex flex-col @(isOffsetDown ? "lg:pt-12" : (isOffsetUp ? "lg:-mt-12" : "lg:pb-12"))">
+                                <div class="relative aspect-[3/4] bg-atelier-footer overflow-hidden group">
                                     @if (!string.IsNullOrEmpty(product.ImageUrl))
                                     {
                                         <img src="@product.ImageUrl" alt="@product.Name" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105">
                                     }
-                                    <div class="absolute inset-0 bg-white/10 backdrop-blur-[1px] opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center p-6">
+                                    <div class="absolute inset-0 bg-atelier-overlay backdrop-blur-[1px] opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
                                         <a asp-page="/Products/Detail" asp-route-id="@product.Id" 
-                                           class="bg-white text-atelier-dark text-[12px] uppercase tracking-[1.2px] px-[24px] py-[12px] shadow-[0px_24px_48px_-12px_rgba(50,50,51,0.08)] hover:bg-atelier-dark hover:text-white transition-all transform translate-y-4 group-hover:translate-y-0 duration-700 font-work">
+                                           class="bg-white text-atelier-dark text-[12px] uppercase tracking-[1.2px] px-6 py-3 shadow-[0px_24px_48px_-12px_rgba(50,50,51,0.08)] hover:bg-atelier-dark hover:text-white transition-all transform translate-y-4 group-hover:translate-y-0 duration-700 font-work">
                                             Quick View
                                         </a>
                                     </div>
                                 </div>
 
-                                <div class="flex flex-col gap-1">
+                                <div class="mt-6 space-y-1">
                                     <div class="flex justify-between items-start leading-none">
                                         <h2 class="text-[18px] font-bold text-atelier-dark font-manrope tracking-atelier-tight leading-[28px]">@product.Name</h2>
                                         <span class="text-[14px] leading-[20px] text-atelier-gray font-normal font-work">$@product.Price.ToString("#,##0")</span>
@@ -147,81 +138,55 @@
                                     <p class="text-[12px] uppercase tracking-[0.6px] text-atelier-gray font-normal font-work leading-[16px]">@product.Material</p>
                                 </div>
                             </div>
-                        </div>
-                    }
-                </div>
-
-                <!-- Pagination & Load More -->
-                <div class="mt-40 flex flex-col items-center gap-16">
-                    <div class="w-full h-px bg-atelier-divider/50"></div>
-                    
-                    <div class="flex items-center gap-12">
-                        @if (Model.Products.HasPreviousPage)
-                        {
-                            <a asp-page="/Products/Index" 
-                               asp-route-pageIndex="@(Model.PageIndex - 1)"
-                               asp-route-q="@Model.Q"
-                               asp-route-sortBy="@Model.SortBy"
-                               asp-route-isDesc="@Model.IsDesc"
-                               asp-route-material="@Model.Material"
-                               asp-route-color="@Model.Color"
-                               class="text-[12px] uppercase tracking-[1.2px] text-atelier-dark hover:text-atelier-green transition-colors font-work">Previous</a>
                         }
-                        else
-                        {
-                            <span class="text-[12px] uppercase tracking-[1.2px] text-atelier-dark opacity-30 cursor-not-allowed font-work">Previous</span>
-                        }
+                    </div>
 
-                        <div class="flex gap-8">
-                            @for (int p = 1; p <= Model.Products.TotalPages; p++)
+                    <!-- Pagination -->
+                    <div class="mt-40 flex flex-col items-center">
+                        <div class="w-full h-px bg-atelier-divider mb-12"></div>
+                        
+                        <div class="flex items-center gap-12">
+                            @if (Model.Products.HasPreviousPage)
                             {
-                                <a asp-page="/Products/Index" 
-                                   asp-route-pageIndex="@p"
-                                   asp-route-q="@Model.Q"
-                                   asp-route-sortBy="@Model.SortBy"
-                                   asp-route-isDesc="@Model.IsDesc"
-                                   asp-route-material="@Model.Material"
-                                   asp-route-color="@Model.Color"
-                                   class="text-[12px] uppercase tracking-[1.2px] font-work @(Model.PageIndex == p ? "text-atelier-dark font-semibold border-b border-atelier-dark pb-px" : "text-atelier-dark opacity-50 hover:opacity-100") transition-all">
-                                    @p.ToString("D2")
-                                </a>
+                                <a asp-page="/Products/Index" asp-route-pageIndex="@(Model.PageIndex - 1)" class="text-[12px] uppercase tracking-[1.2px] text-atelier-dark hover:text-atelier-green transition-colors font-work">Previous</a>
+                            }
+                            else
+                            {
+                                <span class="text-[12px] uppercase tracking-[1.2px] text-atelier-dark opacity-30 font-work">Previous</span>
+                            }
+
+                            <div class="flex gap-8">
+                                @for (int p = 1; p <= Model.Products.TotalPages; p++)
+                                {
+                                    <a asp-page="/Products/Index" asp-route-pageIndex="@p" 
+                                       class="text-[12px] uppercase tracking-[1.2px] font-work transition-all @(Model.PageIndex == p ? "text-atelier-dark font-semibold border-b border-atelier-dark pb-px" : "text-atelier-dark opacity-50 hover:opacity-100")">
+                                        @p.ToString("D2")
+                                    </a>
+                                }
+                            </div>
+
+                            @if (Model.Products.HasNextPage)
+                            {
+                                <a asp-page="/Products/Index" asp-route-pageIndex="@(Model.PageIndex + 1)" class="text-[12px] uppercase tracking-[1.2px] text-atelier-dark hover:text-atelier-green transition-colors font-work">Next</a>
+                            }
+                            else
+                            {
+                                <span class="text-[12px] uppercase tracking-[1.2px] text-atelier-dark opacity-30 font-work">Next</span>
                             }
                         </div>
 
                         @if (Model.Products.HasNextPage)
                         {
-                            <a asp-page="/Products/Index" 
-                               asp-route-pageIndex="@(Model.PageIndex + 1)"
-                               asp-route-q="@Model.Q"
-                               asp-route-sortBy="@Model.SortBy"
-                               asp-route-isDesc="@Model.IsDesc"
-                               asp-route-material="@Model.Material"
-                               asp-route-color="@Model.Color"
-                               class="text-[12px] uppercase tracking-[1.2px] text-atelier-dark hover:text-atelier-green transition-colors font-work">Next</a>
-                        }
-                        else
-                        {
-                            <span class="text-[12px] uppercase tracking-[1.2px] text-atelier-dark opacity-30 cursor-not-allowed font-work">Next</span>
+                            <div class="mt-16">
+                                <a asp-page="/Products/Index" asp-route-pageIndex="@(Model.PageIndex + 1)" 
+                                   class="bg-atelier-green text-[#ebfcea] px-12 py-4 text-[12px] uppercase tracking-[2.4px] font-normal hover:bg-atelier-dark transition-all duration-500 font-work inline-block">
+                                    Load More Essentials
+                                </a>
+                            </div>
                         }
                     </div>
-
-                    @if (Model.Products.HasNextPage)
-                    {
-                        <div class="mt-8">
-                            <a asp-page="/Products/Index" 
-                               asp-route-pageIndex="@(Model.PageIndex + 1)"
-                               asp-route-q="@Model.Q"
-                               asp-route-sortBy="@Model.SortBy"
-                               asp-route-isDesc="@Model.IsDesc"
-                               asp-route-material="@Model.Material"
-                               asp-route-color="@Model.Color"
-                               class="bg-atelier-green text-[#ebfcea] px-[48px] py-[16px] text-[12px] uppercase tracking-[2.4px] font-normal hover:bg-atelier-dark transition-all duration-500 font-work">
-                                Load More Essentials
-                            </a>
-                        </div>
-                    }
-                </div>
-            }
+                }
+            </div>
         </div>
     </div>
 </div>
