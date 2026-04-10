@@ -1,106 +1,106 @@
-# Feature Specification: Product Browsing and Search
+# 功能需求規格書：商品瀏覽與搜尋
 
-**Feature Branch**: `001-product-browse-search`  
-**Created**: 2026-04-10  
-**Status**: Draft  
-**Input**: User description: "建立商品瀏覽與搜尋功能，支援商品列表分頁、關鍵字搜尋、分類篩選與排序（價格、熱銷），前端使用 Tailwind CSS。"
+**功能分支**: `001-product-browse-search`  
+**建立日期**: 2026-04-10  
+**狀態**: 草稿  
+**輸入**: 用戶描述："建立商品瀏覽與搜尋功能，支援商品列表分頁、關鍵字搜尋、分類篩選與排序（價格、熱銷），前端使用 Tailwind CSS。"
 
-## User Scenarios & Testing *(mandatory)*
+## 使用者情境與測試 *(必填)*
 
-### User Story 1 - Browsing Products with Pagination (Priority: P1)
+### 使用者情境 1 - 分頁瀏覽商品 (優先級: P1)
 
-As a customer, I want to browse a list of products in a paginated view so that I can easily navigate through the catalog without being overwhelmed by too many items at once.
+作為一名客戶，我希望能夠以分頁視圖瀏覽商品列表，以便我可以輕鬆地導覽目錄，而不會被過多的項目同時淹沒。
 
-**Why this priority**: Core functionality for any e-commerce site; essential for discovery and performance.
+**為何是此優先級**: 這是任何電子商務網站的核心功能；對於商品探索與系統效能至關重要。
 
-**Independent Test**: Can be fully tested by navigating the product list and clicking pagination controls, delivering the value of catalog exploration.
+**獨立測試**: 可以透過導覽商品列表並點擊分頁控制項進行完整測試，實現目錄探索的價值。
 
-**Acceptance Scenarios**:
+**驗收情境**:
 
-1. **Given** there are 50 products in the system, **When** I view the product list, **Then** I see the first 20 products and pagination controls.
-2. **Given** I am on the first page of the product list, **When** I click the "Next" button, **Then** I see the next set of products (21-40).
-
----
-
-### User Story 2 - Searching by Keyword (Priority: P1)
-
-As a customer, I want to search for products using keywords so that I can quickly find specific items I am interested in.
-
-**Why this priority**: Critical for users who know what they want; directly impacts conversion rates.
-
-**Independent Test**: Can be tested by entering a keyword and verifying that only matching products are displayed.
-
-**Acceptance Scenarios**:
-
-1. **Given** products "Gaming Mouse" and "Office Keyboard" exist, **When** I search for "Mouse", **Then** only the "Gaming Mouse" is displayed.
-2. **Given** I have entered a keyword, **When** no products match the keyword, **Then** I see a message stating "No products found."
+1. **假設** 系統中有 50 個商品，**當** 我查看商品列表時，**那麼** 我應該看到前 48 個商品與分頁控制項。
+2. **假設** 我在商品列表的第一頁，**當** 我點擊「下一頁」按鈕時，**那麼** 我應該看到下一組商品。
 
 ---
 
-### User Story 3 - Filtering by Category (Priority: P2)
+### 使用者情境 2 - 關鍵字搜尋 (優先級: P1)
 
-As a customer, I want to filter products by category so that I can narrow down the list to specific types of items.
+作為一名客戶，我希望能夠使用關鍵字搜尋商品，以便我可以快速找到我感興趣的特定項目。
 
-**Why this priority**: Improves user experience by helping users navigate large catalogs.
+**為何是此優先級**: 對於知道自己想要什麼的使用者來說至關重要；直接影響轉換率。
 
-**Independent Test**: Can be tested by selecting a category and verifying the filtered results.
+**獨立測試**: 可以透過輸入關鍵字並驗證是否僅顯示匹配的商品來測試。
 
-**Acceptance Scenarios**:
+**驗收情境**:
 
-1. **Given** categories "Electronics" and "Furniture" exist, **When** I select "Electronics", **Then** only products assigned to "Electronics" are shown.
-2. **Given** a category is selected, **When** I clear the filter, **Then** all products are displayed again.
-
----
-
-### User Story 4 - Sorting by Price and Popularity (Priority: P2)
-
-As a customer, I want to sort products by price (low to high, high to low) and sales (hot) so that I can find the best deals or most popular items.
-
-**Why this priority**: Enhances the shopping experience by allowing users to prioritize items based on their preferences.
-
-**Independent Test**: Can be tested by applying different sort options and verifying the order of items.
-
-**Acceptance Scenarios**:
-
-1. **Given** a list of products with varying prices, **When** I sort by "Price: Low to High", **Then** the cheapest product appears first.
-2. **Given** products with different sales volumes, **When** I sort by "Popularity" (Sales), **Then** the products with the highest sales volume appear first.
+1. **假設** 存在「電競滑鼠」與「辦公鍵盤」商品，**當** 我搜尋「滑鼠」時，**那麼** 系統僅顯示「電競滑鼠」。
+2. **假設** 我輸入了關鍵字，**當** 沒有商品匹配該關鍵字時，**那麼** 我會看到「找不到相關商品」的提示訊息。
 
 ---
 
-### Edge Cases
+### 使用者情境 3 - 分類篩選 (優先級: P2)
 
-- **No Search Results**: How the system handles keywords that don't match any product name or description.
-- **Large Page Numbers**: What happens if a user manually enters a page number beyond the total number of pages.
-- **Special Characters**: How the search handles special characters or very long query strings.
-- **Simultaneous Filter and Search**: Ensuring that filters and search keywords work together correctly (AND logic).
+作為一名客戶，我希望能夠按分類篩選商品，以便我可以將列表縮小到特定類型的項目。
 
-## Requirements *(mandatory)*
+**為何是此優先級**: 透過幫助使用者導覽大型目錄來提升使用者體驗。
 
-### Functional Requirements
+**獨立測試**: 可以透過選擇一個或多個分類並驗證篩選結果來測試。
 
-- **FR-001**: System MUST support keyword search matching against both product names and descriptions.
-- **FR-002**: System MUST provide pagination for product lists with a default page size of 48 items.
-- **FR-003**: System MUST allow users to filter products by selecting multiple categories simultaneously (using OR logic).
-- **FR-004**: System MUST support sorting by Price (Ascending/Descending) and Sales Volume (Descending).
-- **FR-005**: System MUST maintain search and filter state when navigating between pages.
+**驗收情境**:
 
-### Key Entities *(include if feature involves data)*
+1. **假設** 存在「電子產品」與「家具」分類，**當** 我選擇「電子產品」時，**那麼** 系統僅顯示分配至「電子產品」的商品。
+2. **假設** 已選擇一個分類，**當** 我清除篩選條件時，**那麼** 系統再次顯示所有商品。
 
-- **Product**: Represents an item for sale (Name, Description, Price, Sales Volume, Category ID, Image URL).
-- **Category**: Represents a grouping of products (Name, Description).
+---
 
-## Success Criteria *(mandatory)*
+### 使用者情境 4 - 按價格與熱銷程度排序 (優先級: P2)
 
-### Measurable Outcomes
+作為一名客戶，我希望能夠按價格（由低到高、由高到低）與銷量（熱銷）排序商品，以便我可以找到最優惠或最熱門的項目。
 
-- **SC-001**: Users can find a specific product via search in under 10 seconds.
-- **SC-002**: Search results for a catalog of 10,000 items are returned in under 1 second.
-- **SC-003**: 95% of users can successfully apply a category filter and a sort option on their first attempt.
-- **SC-004**: Pagination controls respond instantly (under 200ms) to user interactions.
+**為何是此優先級**: 允許使用者根據其偏好優選項目，增強購物體驗。
 
-## Assumptions
+**獨立測試**: 可以透過套用不同的排序選項並驗證項目的順序來測試。
 
-- **Product Data**: Assumes products have a `sales_volume` attribute to support "Hot" (Popularity) sorting.
-- **Category Structure**: Assumes a flat category structure for the initial implementation.
-- **Persistence**: Search and filter criteria are passed via URL query parameters for easy bookmarking and sharing.
-- **Default Sort**: If no sort option is selected, the system defaults to "Newest Arrivals" or "Relevance".
+**驗收情境**:
+
+1. **假設** 商品列表中有不同價格的商品，**當** 我按「價格：由低到高」排序時，**那麼** 最便宜的商品會排在首位。
+2. **假設** 商品有不同的銷售量，**當** 我按「熱銷程度」（銷量）排序時，**那麼** 銷售量最高的商品會排在首位。
+
+---
+
+### 邊界情況
+
+- **無搜尋結果**: 系統如何處理與任何商品名稱或描述都不匹配的關鍵字。
+- **極大頁碼**: 如果使用者手動輸入超出總頁數的頁碼，系統如何處理。
+- **特殊字元**: 搜尋如何處理特殊字元或極長的查詢字串。
+- **同時進行篩選與搜尋**: 確保篩選器與搜尋關鍵字能正確協同工作（採用 AND 邏輯）。
+
+## 需求 *(必填)*
+
+### 功能需求
+
+- **FR-001**: 系統必須支援同時匹配商品名稱與描述的關鍵字搜尋。
+- **FR-002**: 系統必須為商品列表提供分頁功能，預設每頁顯示 48 個項目。
+- **FR-003**: 系統必須允許使用者同時選擇多個分類進行篩選（使用 OR 邏輯）。
+- **FR-004**: 系統必須支援按價格（升冪/降冪）與銷售量（降冪）排序。
+- **FR-005**: 系統在分頁導覽時必須保持搜尋與篩選狀態。
+
+### 關鍵實體 *(若功能涉及數據則包含)*
+
+- **商品 (Product)**: 代表待售項目（名稱、描述、價格、銷售量、分類 ID、圖片網址）。
+- **分類 (Category)**: 代表商品的群組（名稱、描述）。
+
+## 成功標準 *(必填)*
+
+### 可衡量的成果
+
+- **SC-001**: 使用者能在 10 秒內透過搜尋找到特定商品。
+- **SC-002**: 對於擁有 10,000 個項目的目錄，搜尋結果應在 1 秒內回傳。
+- **SC-003**: 95% 的使用者能在第一次嘗試時成功套用分類篩選與排序選項。
+- **SC-004**: 分頁控制項對使用者操作的響應應即時（低於 200 毫秒）。
+
+## 假設
+
+- **商品數據**: 假設商品具有 `sales_volume` 屬性以支援「熱銷」（熱門程度）排序。
+- **分類結構**: 初始實作假設為扁平的分類結構。
+- **持久化**: 搜尋與篩選準則透過 URL 查詢參數傳遞，以便於加入書籤與分享。
+- **預設排序**: 若未選擇任何排序選項，系統預設為「最新上架」或「相關度」。
