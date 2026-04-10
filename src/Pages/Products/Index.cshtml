@@ -1,0 +1,135 @@
+@page
+@model ShoppingCart.Pages.Products.IndexModel
+@{
+    ViewData["Title"] = "Products";
+}
+
+<div class="flex flex-col md:flex-row gap-8">
+    <!-- Sidebar: Filters -->
+    <aside class="w-full md:w-64 flex-shrink-0">
+        <form method="get">
+            <div class="space-y-6">
+                <!-- Search -->
+                <div>
+                    <h3 class="text-sm font-medium text-gray-900 mb-2">Search</h3>
+                    <div class="relative">
+                        <input type="text" name="q" value="@Model.Q" 
+                               class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" 
+                               placeholder="Keywords...">
+                    </div>
+                </div>
+
+                <!-- Categories -->
+                <div>
+                    <h3 class="text-sm font-medium text-gray-900 mb-2">Categories</h3>
+                    <div class="space-y-2">
+                        @foreach (var category in Model.Categories)
+                        {
+                            <div class="flex items-center">
+                                <input type="checkbox" name="categoryIds" value="@category.Id" 
+                                       id="cat-@category.Id"
+                                       @(Model.CategoryIds != null && Model.CategoryIds.Contains(category.Id) ? "checked" : "")
+                                       class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                                <label for="cat-@category.Id" class="ml-2 text-sm text-gray-600">@category.Name</label>
+                            </div>
+                        }
+                    </div>
+                </div>
+
+                <!-- Sort -->
+                <div>
+                    <h3 class="text-sm font-medium text-gray-900 mb-2">Sort By</h3>
+                    <select name="sortBy" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm">
+                        <option value="CreatedTime" selected="@(Model.SortBy == "CreatedTime")">Latest</option>
+                        <option value="Price" selected="@(Model.SortBy == "Price")">Price</option>
+                        <option value="SalesVolume" selected="@(Model.SortBy == "SalesVolume")">Hot</option>
+                    </select>
+                </div>
+
+                <div class="pt-4">
+                    <button type="submit" class="w-full bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition">Apply Filters</button>
+                    <a asp-page="/Products/Index" class="block text-center mt-2 text-sm text-gray-500 hover:text-gray-700">Clear All</a>
+                </div>
+            </div>
+        </form>
+    </aside>
+
+    <!-- Main Content: Product Grid -->
+    <div class="flex-grow">
+        <div class="flex justify-between items-center mb-6">
+            <h1 class="text-2xl font-bold text-gray-900">Products</h1>
+            <p class="text-sm text-gray-500">Showing @Model.Products.Count results</p>
+        </div>
+
+        @if (!Model.Products.Any())
+        {
+            <div class="bg-white rounded-lg shadow p-12 text-center">
+                <p class="text-gray-500 text-lg">No products found matching your criteria.</p>
+            </div>
+        }
+        else
+        {
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                @foreach (var product in Model.Products)
+                {
+                    <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition">
+                        <div class="h-48 bg-gray-100 flex items-center justify-center">
+                            @if (!string.IsNullOrEmpty(product.ImageUrl))
+                            {
+                                <img src="@product.ImageUrl" alt="@product.Name" class="h-full w-full object-cover">
+                            }
+                            else
+                            {
+                                <span class="text-gray-400">No Image</span>
+                            }
+                        </div>
+                        <div class="p-4">
+                            <div class="text-xs font-medium text-blue-600 mb-1 uppercase tracking-wider">@product.CategoryName</div>
+                            <h2 class="text-lg font-semibold text-gray-900 mb-2 truncate" title="@product.Name">@product.Name</h2>
+                            <div class="flex justify-between items-center">
+                                <span class="text-xl font-bold text-gray-900">$@product.Price.ToString("F2")</span>
+                                <span class="text-xs text-gray-500">@product.SalesVolume sold</span>
+                            </div>
+                            <div class="mt-4">
+                                <a asp-page="/Products/Detail" asp-route-id="@product.Id" class="block text-center w-full border border-blue-600 text-blue-600 px-4 py-2 rounded-md hover:bg-blue-50 transition text-sm font-medium">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <!-- Pagination -->
+            <div class="mt-12 flex justify-center items-center space-x-2">
+                @if (Model.Products.HasPreviousPage)
+                {
+                    <a asp-page="/Products/Index" 
+                       asp-route-pageIndex="@(Model.PageIndex - 1)"
+                       asp-route-q="@Model.Q"
+                       asp-route-sortBy="@Model.SortBy"
+                       asp-route-isDesc="@Model.IsDesc"
+                       class="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">Previous</a>
+                }
+                else
+                {
+                    <span class="px-4 py-2 border border-gray-200 rounded-md text-sm font-medium text-gray-300 bg-gray-50 cursor-not-allowed">Previous</span>
+                }
+
+                <span class="text-sm text-gray-700">Page @Model.PageIndex of @Model.Products.TotalPages</span>
+
+                @if (Model.Products.HasNextPage)
+                {
+                    <a asp-page="/Products/Index" 
+                       asp-route-pageIndex="@(Model.PageIndex + 1)"
+                       asp-route-q="@Model.Q"
+                       asp-route-sortBy="@Model.SortBy"
+                       asp-route-isDesc="@Model.IsDesc"
+                       class="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">Next</a>
+                }
+                else
+                {
+                    <span class="px-4 py-2 border border-gray-200 rounded-md text-sm font-medium text-gray-300 bg-gray-50 cursor-not-allowed">Next</span>
+                }
+            </div>
+        }
+    </div>
+</div>
