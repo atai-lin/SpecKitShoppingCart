@@ -2,11 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Additional shared styles from plan.md / specs */
-:root {
-  --primary-color: #3b82f6; /* Example blue */
-}
-
-body {
-  @apply font-sans antialiased text-gray-900;
+@layer base {
+  body {
+    @apply antialiased;
+  }
 }

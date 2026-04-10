@@ -25,5 +25,8 @@ namespace ShoppingCart.Models
 
         public int CategoryId { get; set; }
         public Category Category { get; set; } = default!;
+
+        public string? Material { get; set; }
+        public string? Color { get; set; }
     }
 }
