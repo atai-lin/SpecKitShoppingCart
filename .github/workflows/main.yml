@@ -1,0 +1,27 @@
+name: Notify Spec Changes
+
+on:
+  pull_request:
+    paths:
+      - '**/spec.md'
+
+permissions:
+  contents: read
+  pull-requests: write   # 允許對 PR 發留言
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Notify stakeholders
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const prNumber = context.payload.pull_request.number;
+
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: prNumber,
+              body: 'Specification changed. @product-team @qa-team please review.'
+            });
